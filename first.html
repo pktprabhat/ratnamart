@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items for Sale</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Playfair Display', serif;
+            background: radial-gradient(circle, rgba(255, 245, 228, 1) 0%, rgba(250, 224, 198, 1) 100%);
+            color: #4b3c31;
+            overflow-x: hidden;
+            transition: all 0.3s ease-in-out;
+            padding-bottom: 50px;
+            margin: 0;
+        }
+
+        h1, h5 {
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 1.5px;
+            color: #9C7D4E;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            color: #8E5C3D;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #C27F58, #E6D1A0);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            animation: glowEffect 1s ease-out infinite alternate;
+        }
+
+        @keyframes glowEffect {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6); }
+            100% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.6); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #6a4e3d;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #ffdf80;
+        }
+
+        .navbar-nav .nav-link {
+            color: #d8b28b;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffdf80;
+        }
+
+        /* Main Container */
+        .container {
+            margin-top: 40px;
+            padding: 0 15px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            background: #fff3e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .card img {
+            border-radius: 10px;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card img:hover {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #9C7D4E;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #8E5C3D;
+            margin: 15px 0;
+        }
+
+        .add-to-cart {
+            font-size: 1.1rem;
+            background-color: #C27F58;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #E6D1A0;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #6a4e3d;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            position: relative;
+            box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #ffdf80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        .social-icons a {
+            margin: 10px;
+            font-size: 1.6rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Scroll to Top Button */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #C27F58;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50%;
+            border: none;
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #E6D1A0;
+        }
+
+        /* Hover Zoom */
+        .card-img-top {
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        /* Categories & Sort Dropdowns */
+        .form-select {
+            font-size: 1.1rem;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f1e1c6;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .form-select:hover {
+            background-color: #c5b298;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 767px) {
+            header {
+                padding: 60px 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .navbar-nav {
+                margin-top: 10px;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+
+            .card-title {
+                font-size: 1.25rem;
+            }
+
+            .card-text {
+                font-size: 1rem;
+            }
+
+            .add-to-cart {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+
+            .item {
+                margin-bottom: 20px;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+    <h1>RatnaMart</h1>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Spiritual Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logoutBtn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Sort & Filter -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <select id="sortSelect" class="form-select">
+                <option value="default">Sort by</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <select id="filterCategory" class="form-select">
+                <option value="all">All Categories</option>
+                <option value="pooja">Pooja</option>
+                <option value="healing">Healing</option>
+                <option value="gems">Gems</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Items for Sale -->
+<div class="container mt-5">
+    <div class="row" id="itemsContainer">
+        <!-- Pooja Item -->
+        <div class="col-md-4 item" data-category="pooja" data-price="50">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Pooja Thali">
+                <div class="card-body">
+                    <h5 class="card-title">Pooja Thali</h5>
+                    <p class="card-text">$50</p>
+                    <button class="btn add-to-cart" data-id="3" data-name="Pooja Thali" data-price="50">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Healing Item -->
+        <div class="col-md-4 item" data-category="healing" data-price="120">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Healing Crystal">
+                <div class="card-body">
+                    <h5 class="card-title">Healing Crystal</h5>
+                    <p class="card-text">$120</p>
+                    <button class="btn add-to-cart" data-id="4" data-name="Healing Crystal" data-price="120">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gems Item -->
+        <div class="col-md-4 item" data-category="gems" data-price="200">
+            <div class="card">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Gemstone">
+                <div class="card-body">
+                    <h5 class="card-title">Gemstone Necklace</h5>
+                    <p class="card-text">$200</p>
+                    <button class="btn add-to-cart" data-id="5" data-name="Gemstone Necklace" data-price="200">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Spiritual Store | All rights reserved</p>
+    <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        <li class="list-inline-item"><a href="#">Terms of Service</a></li>
+        <li class="list-inline-item"><a href="#">Help</a></li>
+    </ul>
+</footer>
+
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
+
+<!-- Floating Cart Button -->
+<button id="floatingCartBtn" onclick="window.location.href='cart.html'">
+    <i class="bi bi-cart-fill"></i>
+</button>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    // Scroll to Top
+    window.onscroll = function() {
+        var btn = document.getElementById("scrollToTopBtn");
+        var cartBtn = document.getElementById("floatingCartBtn");
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            btn.style.display = "block";
+            cartBtn.style.display = "block"; // Show cart button when scrolled down
+        } else {
+            btn.style.display = "none";
+            cartBtn.style.display = "none"; // Hide cart button when at top
+        }
+    };
+
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
+<!-- Floating Cart Button Styles -->
+<style>
+    /* Floating Cart Button */
+    #floatingCartBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #C27F58;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50%;
+        border: none;
+        font-size: 1.6rem;
+        display: none; /* Hidden initially */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 999;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    #floatingCartBtn:hover {
+        background-color: #E6D1A0;
+        transform: scale(1.1);
+    }
+
+    #floatingCartBtn i {
+        font-size: 1.8rem;
+    }
+</style>
+
+        // Add to Cart
+        $('.add-to-cart').click(function() {
+            var itemId = $(this).data('id');
+            var itemName = $(this).data('name');
+            var itemPrice = $(this).data('price');
+            
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            var itemExists = false;
+
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].id === itemId) {
+                    cart[i].quantity++;
+                    itemExists = true;
+                    break;
+                }
+            }
+
+            if (!itemExists) {
+                cart.push({ id: itemId, name: itemName, price: itemPrice, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        });
+
+        // Update Cart Count
+        function updateCartCount() {
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            $('#cartCount').text('(' + cart.length + ')');
+        }
+
+        // Initialize cart count on page load
+        updateCartCount();
+    });
+</script>
+
+</body>
+</html>

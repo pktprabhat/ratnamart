@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Login</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle, rgba(255, 245, 228, 1) 0%, rgba(250, 224, 198, 1) 100%);
+            color: #4b3c31;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+            margin: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            text-align: center;
+            color: #9C7D4E;
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff3e0;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin-top: 50px; /* Add top margin for spacing */
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #8E5C3D;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #C27F58;
+            background-color: #F1E1C6;
+            padding: 12px 15px;
+            margin-bottom: 20px; /* Add margin between input fields */
+        }
+
+        .form-control:focus {
+            border-color: #E6D1A0;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        .login-btn {
+            background-color: #C27F58;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.2rem;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px; /* Add spacing between input and button */
+        }
+
+        .login-btn:hover {
+            background-color: #E6D1A0;
+            transform: scale(1.05);
+        }
+
+        .otp-input {
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 15px;
+            background-color: #f1e1c6;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px; /* Add space between OTP input and button */
+        }
+
+        .input-container {
+            margin-bottom: 20px; /* Space between phone number and OTP */
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-message {
+            color: #4CAF50;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #6a4e3d;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 50px; /* Add top margin for spacing from main content */
+        }
+
+        footer a {
+            color: #ffdf80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        #resendOtpLink {
+            text-align: center;
+            font-size: 1rem;
+            color: #ff9800;
+            cursor: not-allowed;
+        }
+
+        #resendOtpLink a {
+            pointer-events: none; /* Disable the link initially */
+        }
+
+        #resendOtpLink a.enabled {
+            pointer-events: auto;
+            color: #ff5722;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <h1>Login to Spiritual Store</h1>
+</header>
+
+<!-- Login Container -->
+<div class="login-container">
+    <h2>Phone Number Authentication</h2>
+    
+    <!-- Phone number input and OTP input -->
+    <div id="phoneLoginForm">
+        <div class="input-container">
+            <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter your Phone Number" required>
+        </div>
+        
+        <!-- Message displayed after sending OTP -->
+        <div id="otpSentMessage" class="info-message" style="display: none;">
+            OTP has been sent to your phone number. Please check your messages.
+        </div>
+
+        <!-- Error message -->
+        <div id="otpError" class="error-message" style="display: none;">
+            Invalid OTP. Please try again.
+        </div>
+
+        <!-- OTP input will be displayed after clicking Send OTP -->
+        <div class="input-container" id="otpSection" style="display: none;">
+            <input type="text" id="otpInput" class="otp-input" placeholder="Enter OTP" required>
+        </div>
+
+        <!-- Buttons -->
+        <button type="button" id="sendOtpBtn" class="login-btn">Send OTP</button>
+        <button type="button" id="loginBtn" class="login-btn" style="display: none;">Login</button>
+        
+        <!-- Resend OTP Link with countdown timer -->
+        <div id="resendOtpLink" style="display: none;">
+            <p><a href="javascript:void(0)" id="resendOtpBtn" class="disabled" style="pointer-events: none;">Resend OTP</a> <span id="timer">(1:00)</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Spiritual Store | All rights reserved</p>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        <li class="list-inline-item"><a href="#">Terms of Service</a></li>
+        <li class="list-inline-item"><a href="#">Help</a></li>
+    </ul>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    let otpTimeout;
+    let countdownTimer;
+    let timeLeft = 60;
+
+    // Function to handle sending OTP
+    document.getElementById('sendOtpBtn').addEventListener('click', function() {
+        const phoneNumber = document.getElementById('phoneNumber').value;
+        
+        if (!phoneNumber) {
+            alert("Please enter a valid phone number.");
+            return;
+        }
+        
+        // Simulating sending OTP (This should be replaced with actual API integration)
+        document.getElementById('otpSentMessage').style.display = 'block';  // Show OTP sent message
+        document.getElementById('resendOtpLink').style.display = 'block'; // Show resend OTP link
+        
+        // Disable the Send OTP button after it's clicked
+        document.getElementById('sendOtpBtn').disabled = true;
+        
+        // Disable the "Resend OTP" link initially
+        document.getElementById('resendOtpBtn').classList.add('disabled');
+        
+        // Disable the "Send OTP" button for 1 minute
+        document.getElementById('sendOtpBtn').style.display = 'none';
+
+        // Enable OTP input and the "Login" button
+        document.getElementById('phoneNumber').disabled = true;
+        document.getElementById('otpSection').style.display = 'block';
+        document.getElementById('loginBtn').style.display = 'block';
+
+        // Start the countdown timer for resend OTP link
+        countdownTimer = setInterval(function() {
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('resendOtpBtn').classList.remove('disabled');
+                document.getElementById('resendOtpBtn').style.pointerEvents = 'auto';
+                document.getElementById('timer').textContent = '(1:00)'; // Reset timer
+            } else {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = `(${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
+                timeLeft--;
+            }
+        }, 1000);
+    });
+
+    // Handle OTP verification
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const otp = document.getElementById('otpInput').value;
+        
+        if (otp === '123456') {  // Dummy OTP for testing
+            // Redirect to the first page after successful login
+            window.location.href = 'first.html'; // Redirect to first.html
+        } else {
+            document.getElementById('otpError').style.display = 'block'; // Show error message
+        }
+    });
+
+    // Resend OTP
+    document.getElementById('resendOtpBtn').addEventListener('click', function() {
+        if (!document.getElementById('phoneNumber').value) {
+            alert("Please enter your phone number before resending OTP.");
+            return;
+        }
+
+        // Simulate OTP resend
+        document.getElementById('otpSentMessage').style.display = 'block';
+        document.getElementById('resendOtpLink').style.display = 'block';
+        document.getElementById('resendOtpBtn').classList.add('disabled');
+        document.getElementById('resendOtpBtn').style.pointerEvents = 'none';
+        
+        // Reset the 1-minute timeout for resend
+        clearTimeout(otpTimeout);
+        otpTimeout = setTimeout(function() {
+            document.getElementById('resendOtpBtn').classList.remove('disabled');
+            document.getElementById('resendOtpBtn').style.pointerEvents = 'auto';
+        }, 60000); // 1 minute = 60000 ms
+    });
+</script>
+
+</body>
+</html>

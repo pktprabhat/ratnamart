@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - RatnaMart</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Playfair Display', serif;
+            background: radial-gradient(circle, rgba(255, 245, 228, 1) 0%, rgba(250, 224, 198, 1) 100%);
+            color: #4b3c31;
+            padding-bottom: 50px;
+            margin: 0;
+        }
+
+        h1, h5 {
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 1.5px;
+            color: #9C7D4E;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            color: #8E5C3D;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #C27F58, #E6D1A0);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 40px; /* Added space below header */
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #6a4e3d;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #ffdf80;
+        }
+
+        .navbar-nav .nav-link {
+            color: #d8b28b;
+            font-weight: 500;
+            padding-right: 20px; /* Added spacing between links */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffdf80;
+        }
+
+        /* Cart Page */
+        .cart-item {
+            background: #fff3e0;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 15px; /* Reduced margin between items */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item img {
+            border-radius: 8px;
+            width: 80px;
+            height: 80px;
+            margin-right: 15px; /* Added space between image and details */
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-details .info {
+            max-width: 60%; /* Ensuring info doesn't take too much space */
+        }
+
+        .cart-item-details h5 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #8E5C3D;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-details .price {
+            color: #C27F58;
+            font-weight: bold;
+        }
+
+        .cart-item-details .quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity input {
+            width: 50px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            color: #C27F58;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            color: #8E5C3D;
+        }
+
+        .total-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8E5C3D;
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .checkout-btn {
+            background-color: #C27F58;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #E6D1A0;
+        }
+
+        footer {
+            background-color: #6a4e3d;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 40px;
+        }
+
+        footer .social-icons {
+            margin-top: 20px;
+        }
+
+        footer .list-inline-item {
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+    <h1>Your Cart</h1>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">RatnaMart</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Cart Items -->
+<div class="container mt-5">
+    <div id="cartItemsContainer">
+        <!-- Cart Item Template -->
+    </div>
+    <div class="total-price">
+        Total Price: $<span id="totalPrice">0.00</span>
+    </div>
+    <div class="text-center">
+        <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Spiritual Store | All rights reserved</p>
+    <div class="social-icons">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        <li class="list-inline-item"><a href="#">Terms of Service</a></li>
+        <li class="list-inline-item"><a href="#">Help</a></li>
+    </ul>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    // Function to display the cart items
+    function loadCartItems() {
+        var cart = JSON.parse(localStorage.getItem('cart')) || [];
+        var cartItemsContainer = document.getElementById('cartItemsContainer');
+        var totalPrice = 0;
+
+        // Clear the cart items container
+        cartItemsContainer.innerHTML = '';
+
+        // Loop through the cart and add items to the page
+        cart.forEach(function(item, index) {
+            var cartItem = `
+                <div class="cart-item">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="https://via.placeholder.com/100" alt="${item.name}">
+                        </div>
+                        <div class="col-9 cart-item-details">
+                            <div class="info">
+                                <h5>${item.name}</h5>
+                                <p>Price: <span class="price">$${item.price}</span></p>
+                            </div>
+                            <div class="quantity">
+                                <input type="number" class="form-control" value="${item.quantity}" min="1" data-index="${index}">
+                                <span class="remove-btn" data-index="${index}">Remove</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            cartItemsContainer.innerHTML += cartItem;
+            totalPrice += item.price * item.quantity;
+        });
+
+        // Update total price
+        document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    }
+
+    // Remove item from cart
+    document.getElementById('cartItemsContainer').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-btn')) {
+            var index = event.target.getAttribute('data-index');
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCartItems();
+        }
+    });
+
+    // Update quantity
+    document.getElementById('cartItemsContainer').addEventListener('input', function(event) {
+        if (event.target.type === 'number') {
+            var index = event.target.getAttribute('data-index');
+            var newQuantity = parseInt(event.target.value);
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity = newQuantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCartItems();
+        }
+    });
+
+// Function to handle the "Proceed to Checkout" button click
+function goToCheckout() {
+    // Redirect the user to checkout.html
+    window.location.href = "checkout.html";  
+}
+
+    // Initial cart load
+    loadCartItems();
+</script>
+
+</body>
+</html>
